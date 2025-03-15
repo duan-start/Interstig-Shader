@@ -18,7 +18,7 @@
     <ClCompile Include="vendor\GLAD\src\glad.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\trangle.cpp">
+    <ClCompile Include="src\cnavas.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\shader.cpp">
@@ -32,10 +32,11 @@
     <ClInclude Include="src\shader.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\Client.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\shaders\fragmentShader.fs" />
-    <None Include="src\shaders\vertexShader.vs" />
     <None Include="src\CoreShaders\copy.fs" />
     <None Include="src\CoreShaders\copy.vs" />
   </ItemGroup>
