@@ -11,26 +11,21 @@
 
 #include "Client.h"
 
-
+#define vs "src/CoreShaders/copy.v"
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 static  float last_time = 0.0f;
 static float deltaTime;
-
-glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 bool firstMouse = true;
 float lastX, lastY;
 float yaw = -90.0f;	// yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
 float pitch = 0.0f;
 // settings
-
 float fov = 45.0f;
 
-const unsigned int SCR_WIDTH = 1280;
-const unsigned int SCR_HEIGHT = 1000;
+unsigned int SCR_WIDTH = 1280;
+unsigned int SCR_HEIGHT = 1000;
 
 int main()
 {
@@ -43,7 +38,7 @@ int main()
 
     // glfw window creation
     // 已经开始创建窗口了
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "ShaderLearning", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -53,7 +48,6 @@ int main()
     glfwMakeContextCurrent(window);
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
 
     // tell GLFW to capture our mouse
    // glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -85,7 +79,7 @@ int main()
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
 
- shader ourshader(vs, fs);
+    shader ourshader(vs, fs);
 
     glBindVertexArray(VAO);
  
@@ -97,33 +91,20 @@ int main()
 // position attribute 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3* sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-        // texture coord attribute
 
-
-    //load texture
-    
 
     while (!glfwWindowShouldClose(window))
     {
-        // input
-        // -----
-       // processInput(window);
-
-        // render
-        // ------
-        glEnable(GL_DEPTH_TEST);
+       glfwPollEvents();
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT);
         
         // render container
-
-
        //将每一帧的渲染速度和摄像机速度绑定
        
        float currentTime = glfwGetTime();
        deltaTime = currentTime - last_time;
        last_time = currentTime;
-
 
        ourshader.use();
        ourshader.setFloat("iTime", currentTime);
@@ -131,13 +112,10 @@ int main()
        glBindVertexArray(VAO);
        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-    
-
-        
        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
-        glfwPollEvents();
+      
     }
 
     // optional: de-allocate all resources once they've outlived their purpose:
@@ -152,10 +130,6 @@ int main()
     return 0;
 }
 
-// process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-// ---------------------------------------------------------------------------------------------------------
-
-
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -165,4 +139,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
     //回调函数自己对应的width 和height (这个是渲染窗口的大小)，应该是一个状态机，
     // 会自动根据当前的窗口window的数据里面的进行查找
+    SCR_WIDTH = width;
+    SCR_HEIGHT = height;
 }

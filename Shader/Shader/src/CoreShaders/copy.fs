@@ -1,19 +1,19 @@
 #version 330 core
 
 out vec4 FragColor;
-in vec2 TexCoords;
-
+in vec2 Pos;
+in vec2 stand;
+in vec2 screen;
 uniform float iTime;
-uniform vec2 iResolution;
 
 #define t iTime
-#define r iResolution.xy
+#define r screen.xy
 
-void main() {
-   	vec3 c;
+void main(){
+vec3 c;
 	float l,z=t;
 	for(int i=0;i<3;i++) {
-		vec2 uv,p=abs(TexCoords.xy);
+		vec2 uv,p=Pos.xy/r;
 		uv=p;
 		p-=.5;
 		p.x*=r.x/r.y;
@@ -23,4 +23,5 @@ void main() {
 		c[i]=.01/length(mod(uv,1.)-.5);
 	}
 	FragColor=vec4(c/l,t);
+
 }

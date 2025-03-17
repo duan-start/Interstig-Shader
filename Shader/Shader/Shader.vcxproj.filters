@@ -39,6 +39,8 @@
   <ItemGroup>
     <None Include="src\CoreShaders\copy.fs" />
     <None Include="src\CoreShaders\copy.vs" />
+    <None Include="src\CoreShaders\copy.v" />
+    <None Include="src\CoreShaders\youtu1.fs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="vendor\hutao.jpg">
